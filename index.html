@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Meeting Copilot | Elite Interview Assistant</title>
+    <!-- Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #050505;
+            --surface-color: rgba(20, 20, 25, 0.7);
+            --primary-accent: #3b82f6;
+            --secondary-accent: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Abstract Background Glows */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(59, 130, 246, 0.4);
+            top: -100px;
+            left: -100px;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: rgba(139, 92, 246, 0.3);
+            bottom: -200px;
+            right: -200px;
+            animation-duration: 15s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 30px) scale(1.1); }
+        }
+
+        /* Nav */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 8%;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-accent), var(--secondary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 8% 100px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tag-badge {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            display: inline-block;
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            max-width: 900px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            max-width: 650px;
+            margin-bottom: 40px;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+            color: white;
+            text-decoration: none;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6);
+        }
+
+        /* Bypassed Platforms Banner */
+        .bypass-banner {
+            margin-top: 60px;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.02);
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .bypass-banner span {
+            color: #e2e8f0;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 8%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 60px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--surface-color);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .card p {
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .bypass-banner { flex-direction: column; gap: 15px; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+  
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <nav>
+        <div class="logo">AI Meeting Copilot</div>
+        <a href="#download" class="cta-btn" style="padding: 10px 20px; font-size: 15px; box-shadow: none;">Get Installer</a>
+    </nav>
+
+    <section class="hero">
+        <div class="tag-badge">🚀 The Ultimate Desktop Overlay Ecosystem</div>
+        <h1>Dominate Every Technical Interview Natively</h1>
+        <p>A completely stealth, natively-compiled AI overlay designed to seamlessly capture auditory questions and visual algorithms without disrupting your proctoring environment. </p>
+        
+    
+        <a href="https://s3.ap-south-1.amazonaws.com/aws.dev.cloud/copilot_0.1.0_x64-setup.exe" id="download" class="cta-btn">Download for Windows (.exe)</a>
+    </section>
+
+    <div class="bypass-banner">
+        <div>Bypasses: <span>NeoColab</span></div>
+        <div>Supports: <span>Mercer (MSB)</span></div>
+        <div>Defeats: <span>Strict Browser Proctoring</span></div>
+        <div>Compatible: <span>HackerRank / LeetCode</span></div>
+    </div>
+
+    <section class="features">
+        <h2 class="section-title">Stealth Mode. Uncompromised Power.</h2>
+        <div class="grid">
+            
+            <div class="card">
+                <div class="card-icon">🎤</div>
+                <h3>Auditory Hook Intercepts</h3>
+                <p>Natively hooks your local microphone. When an interviewer asks a theoretical question, hit the hotkey to silently transcribe and beam the audio directly into the Gemini LLM for an instant logical breakdown.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🖥️</div>
+                <h3>Optical Screen Grabs</h3>
+                <p>Facing a massive DSA array logic puzzle on screen? A single hotkey mathematically snips your active monitor completely invisible to browser-based screen monitoring software and resolves O(N) complexity natively.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">👻</div>
+                <h3>100% Undetectable UI</h3>
+                <p>The entire application renders dynamically over your desktop as a completely translucent overlay. You can logically click directly *through* the interface natively to type your answers directly into the IDE.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🔐</div>
+                <h3>Hardware Secured</h3>
+                <p>Each compiled binary is absolutely protected natively mapping the deployment explicitly to your Desktop MAC IDs and OS architecture tracking. No data is stored globally, preserving total user privacy.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>Lightning Fast React</h3>
+                <p>Stripped of all heavily bloated Electron dependencies, Tauri bridges blazing-fast Rust payloads securely computing answers up to 40% faster than traditional web environments.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">⌨️</div>
+                <h3>Global OS Hotkeys</h3>
+                <p>Never minimize your interview tab. Execute strict OS-level hotkeys (Ctrl+Shift+L for audio, Ctrl+Shift+A for visual) to trigger the payload instantly while looking completely organic.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 AI Meeting Copilot. This tool is for educational purposes and authorized assessments only.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll implementation organically checking UI anchor tags
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
